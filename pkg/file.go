@@ -2,15 +2,10 @@ package pkg
 
 import (
 	"os"
-	"path"
 )
 
-func GetInputFileContents(filename string) string {
-	var inputDirectory = "../input"
-
-	var path = path.Join(inputDirectory, filename)
-
-	bytes, err := os.ReadFile(path)
+func GetFileContents(filePath string) string {
+	bytes, err := os.ReadFile(filePath)
 
 	if err != nil {
 		panic(err)

@@ -1,6 +1,7 @@
 package day1
 
 import (
+	"path"
 	"reflect"
 	"testing"
 )
@@ -41,6 +42,26 @@ func TestCombineFirstAndLast(t *testing.T) {
 	for _, test := range combineFirstAndLastCases {
 		if output, _ := CombineFirstAndLast(test.arg1); output != test.expected {
 			t.Errorf("Output %q not equal to expected %q", output, test.expected)
+		}
+	}
+}
+
+type testSolveCase struct {
+	arg1     string
+	expected int
+}
+
+var testSolveCases = []testSolveCase{
+	{"day1_test.txt", 142},
+	{"day1_test2.txt", 281},
+}
+
+func TestSolve(t *testing.T) {
+	var inputDirectory = "../../input"
+
+	for _, test := range testSolveCases {
+		if output := Solve(path.Join(inputDirectory, test.arg1)); output != test.expected {
+			t.Errorf("Output %v not equal to expected %v", output, test.expected)
 		}
 	}
 }
