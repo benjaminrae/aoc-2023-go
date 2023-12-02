@@ -18,8 +18,9 @@ type Reveal struct {
 }
 
 type Game struct {
-	Reveals []Reveal
-	Id      int
+	Reveals   []Reveal
+	Id        int
+	CubePower int
 }
 
 func LineToGame(line string) Game {
@@ -93,12 +94,12 @@ func (g Game) GetHighestReveal() Reveal {
 	return reveal
 }
 
-func Solve(inputFile string, maxReveal Reveal) int {
+func Solve(inputFile string) int {
 	var input = pkg.GetFileContents(inputFile)
 
 	var lines = strings.Split(input, "\n")
 
-	var validGames = []Game{}
+	var games = []Game{}
 
 	for _, line := range lines {
 		if len(line) == 0 {
@@ -109,17 +110,15 @@ func Solve(inputFile string, maxReveal Reveal) int {
 
 		var highestReveal = game.GetHighestReveal()
 
-		if highestReveal.Blue <= maxReveal.Blue &&
-			highestReveal.Red <= maxReveal.Red &&
-			highestReveal.Green <= maxReveal.Green {
-			validGames = append(validGames, game)
-		}
+		game.CubePower = highestReveal.Blue * highestReveal.Red * highestReveal.Green
+
+		games = append(games, game)
 	}
 
 	var sum = 0
 
-	for _, game := range validGames {
-		sum += game.Id
+	for _, game := range games {
+		sum += game.CubePower
 	}
 
 	return sum
